@@ -104,3 +104,138 @@ As a registered buyer, I can checkout items selected in my shopping cart so that
 
 ![Thank you page](images/8.png)
 <sup>Thank you page</sup>
+
+
+
+# 🛒 E-commerce Checkout Automation – Naoui Youssef
+
+## 📄 Project Description
+
+This project automates the checkout flow of the [Sauce Demo](https://www.saucedemo.com/) e-commerce site.  
+It tests login, sorting products, adding items to the cart, filling out checkout information, validating total price with tax, and completing a purchase.
+
+---
+
+## Tech Stack
+
+- Cypress v12+
+- JavaScript (ES6+)
+- Cross-platform: Linux / Windows
+
+
+1. Login with valid credentials
+The user logs in using valid username and password.
+
+2. Sort items by lowest price
+The user sorts products in ascending order by price to find cheaper options first.
+
+3. Add items to the shopping cart
+The user selects two or more products to add to the cart.
+
+4. View and verify shopping cart
+The user opens the cart to verify that the correct products are listed (name, price, quantity).
+
+5. Initiate checkout process
+The user clicks on checkout and is redirected to the checkout information page.
+
+6. Fill in checkout details
+The user inputs first name, last name, and zip/postal code — all of which are required.
+
+7. Review checkout overview
+The user sees the item list, subtotal, tax, and total. The tax is calculated as 8% of the item total.
+
+8. Complete the purchase
+The user clicks "Finish" to complete the checkout and sees a confirmation.
+
+9. Empty cart after checkout
+After the order is completed, the cart is automatically emptied.
+
+
+-------------------------------------------------------------------------
+
+
+TS01 – Login with valid credentials
+Given I am on the login page
+
+When I enter standard_user and secret_sauce
+
+Then I should be redirected to the products/inventory page
+
+TS02 – Sort products by lowest price
+Given I am on the inventory page
+
+When I choose "Price (low to high)" from the sort dropdown
+
+Then The items should appear in ascending order of price
+
+TS03 – Add multiple items to cart
+Given Products are sorted by lowest price
+
+When I click “Add to cart” on two or more items
+
+Then The cart icon should display the correct item count
+
+TS04 – Validate cart contents
+Given I added specific items
+
+When I visit the shopping cart page
+
+Then I should see the correct items with matching names and prices
+
+TS05 – Attempt checkout with missing info
+Given I am on the checkout information page
+
+When I leave one or more fields empty
+
+Then I should see an error message saying the field is required
+
+TS06 – Fill checkout form with valid info
+Given I am on the checkout information page
+
+When I enter first name, last name, and zip code
+
+Then I should be able to continue to the overview page
+
+TS07 – Validate order summary and price
+Given I am on the checkout overview page
+
+When I review the items
+
+Then I should see:
+
+Correct item names and prices
+
+Item total = sum of individual prices
+
+Tax = item total * 0.08
+
+Total = item total + tax
+
+TS08 – Complete the checkout process
+Given I am on the overview page
+
+When I click “Finish”
+
+Then I should see a “Thank you” or order confirmation message
+
+TS09 – Verify cart is emptied after checkout
+Given I have completed the order
+
+When I go back to the cart
+
+Then The cart should be empty
+
+
+| Field    | Value           |
+| -------- | --------------- |
+| Username | `standard_user` |
+| Password | `secret_sauce`  |
+
+
+
+| Field      | Value   |
+| ---------- | ------- |
+| First Name | `John`  |
+| Last Name  | `McArther`   |
+| Zip/Postal | `1009` |
+
